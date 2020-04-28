@@ -1,16 +1,24 @@
 package ru.netology.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 public class Radio {
     private int currentStation;
     private int currentVolume;
 
-    private final int maxStation=9;
-    private final int minStation=0;
-    private final int maxVolume=10;
-    private final int minVolume=0;
 
-    public int getCurrentStation() {
-        return currentStation;
+    private int maxStation = 10;
+    private int minStation = 0;
+    private int maxVolume = 100;
+    private int minVolume = 0;
+
+    public Radio(int maxStation) {
+        this.maxStation = maxStation;
     }
 
     public void setCurrentStation(int currentStation) {
@@ -23,41 +31,33 @@ public class Radio {
         this.currentStation = currentStation;
     }
 
-    public int getCurrentVolume() {
-        return currentVolume;
-    }
-
-    public void setCurrentVolume(int currentVolume) {
-        if(currentVolume>maxVolume){
-            return;
-        }
-        if(currentVolume<minVolume){
-            return;
-        }
-        this.currentVolume = currentVolume;
-    }
-
-    public void pressNextStation(){
-        if(currentStation>=maxStation){
+    public void pressNextStation() {
+        if (currentStation >= maxStation) {
             setCurrentStation(minStation);
-        }else{
-            setCurrentStation(currentStation+1);
+        } else {
+            setCurrentStation(currentStation + 1);
         }
     }
 
-    public void pressPrevStation(){
-        if(currentStation<=minStation){
+    public void pressPrevStation() {
+        if (currentStation <= minStation) {
             setCurrentStation(maxStation);
-        }else{
-            setCurrentStation(currentStation-1);
+        } else {
+            setCurrentStation(currentStation - 1);
         }
     }
 
-    public void pressPlusVolume(){
-        setCurrentVolume(currentVolume+1);
+    public void pressPlusVolume() {
+        if (currentVolume >= maxVolume) {
+            return;
+        }
+        setCurrentVolume(currentVolume + 1);
     }
 
-    public void pressMinusVolume(){
-        setCurrentVolume(currentVolume-1);
+    public void pressMinusVolume() {
+        if (currentVolume <= minVolume) {
+            return;
+        }
+        setCurrentVolume(currentVolume - 1);
     }
 }
